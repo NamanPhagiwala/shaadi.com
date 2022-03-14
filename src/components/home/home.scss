@@ -1,0 +1,56 @@
+.home{
+    background-color: ghostwhite;
+    height: 100%;
+    .header{
+        background-color: gainsboro;
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        height: 7vh;
+        padding-top: 10px;
+        text-align: left;
+        position: sticky;
+        text-align: center;
+        font-size: 25px;
+        z-index: 10;
+        top: 0;
+        img{
+            width: 30px;
+            padding-left: 10px;
+            float: left;
+            @media screen and (min-width: 365px) {
+                width: 40px;
+            }
+        }
+        .logout{
+            position: relative;
+            float:right;
+            bottom: -40%;
+            font-size: 15px;
+            color: #696969;
+            padding-right: 5px;
+            @media screen and (min-width: 365px) {
+                bottom: -60%;
+            }
+        }
+    }
+    .main{
+        margin-top: 10px;
+    }
+    .items{
+        width: 90%;
+        padding: 5px;
+        img{
+            border-radius: 50%;
+            position: relative;
+            float: left;
+        }
+        .text{
+            position: relative;
+            top: 10px;
+        }
+    }
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+      }
+}
