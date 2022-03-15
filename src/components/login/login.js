@@ -20,7 +20,6 @@ const updateField=(e, field)=>{
 }
 
 const verifyUser=()=>{
-    debugger;
     if(userName.toLowerCase() === 'foo'){
         if(password.toLowerCase() ==='bar'){
             navigate('/home')

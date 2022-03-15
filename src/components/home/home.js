@@ -19,7 +19,6 @@ const Home= (props)=>{
       }
       else {
         setLoading(true)
-        console.log("scrolling down")
         betterFunction()      
         }
       }
@@ -35,7 +34,7 @@ const Home= (props)=>{
       axios
         .get("https://randomuser.me/api/?results=50")
         .then(res => {
-          setItems(items.length !== 0? [...items, ...res.data.results] : res.data.results);
+          setItems(prevItems=> [...prevItems, ...res.data.results]);
           setLoading(false)
         })
         .catch(
@@ -43,25 +42,23 @@ const Home= (props)=>{
             setError(error);
           }
         )
-        console.log(items.length)
     }
     const logout=()=>{
       localStorage.clear();
       navigate('/')
     }    
-    const debounce = function (fn, d) {
+    const debounce = function (fn, delay) {
       let timer;
       return function () {
-        let context = this,
-        args = arguments;
+        let context = this
         clearTimeout(timer);
         timer = setTimeout(() => {
-          fetchApi.apply(context, args);
+          fn.apply(context);
           setLoading(false);
-        }, 300);
+        }, delay);
       }
     }
-    const betterFunction = debounce(fetchApi, 300);
+    const betterFunction = debounce(fetchApi, 1000);
 
   return(
         <div className="home"> 
@@ -79,7 +76,7 @@ const Home= (props)=>{
                         </div>
                     ))
                 }
-              {loader && <Skeleton count={10}/>}
+              {loader && <Skeleton count={5}/>}
             </div>}
             </div> 
             :
