@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import './home.scss'
-import { useNavigate} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -80,7 +80,7 @@ const Home= (props)=>{
             </div>}
             </div> 
             :
-            <div> You are not Logged in please Login </div>
+            <div> You are not Logged in please<Link to='/'> Login </Link>  </div>
                 }  
       </div>  
     );
