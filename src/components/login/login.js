@@ -21,8 +21,8 @@ const updateField=(e, field)=>{
 
 const verifyUser=()=>{
     debugger;
-    if(userName === 'foo'){
-        if(password ==='bar'){
+    if(userName.toLowerCase() === 'foo'){
+        if(password.toLowerCase() ==='bar'){
             navigate('/home')
             updateStatus(false)
             localStorage.setItem('loggedIn', true)

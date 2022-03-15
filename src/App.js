@@ -2,7 +2,6 @@ import './App.css';
 import Home from './components/home/home';
 import { Routes, Route, Link } from "react-router-dom";
 import Login from './components/login/login';
-
 function App() {
   return (
     <div className="App">

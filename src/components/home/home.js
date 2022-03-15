@@ -1,7 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import './home.scss'
 import { useNavigate} from 'react-router-dom';
-import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -11,7 +10,24 @@ const Home= (props)=>{
     const [error, setError] = useState(null);
     const [fetchData, updateData] = useState(false);
     const [items, setItems] = useState([]);
-    
+    const [loader, setLoading]= useState(false);
+
+    function handleScroll(){
+      let timer
+      if(window.innerHeight + document.documentElement.scrollTop!==document.documentElement.offsetHeight){
+        return;
+      }
+      else {
+        setLoading(true)
+        console.log("scrolling down")
+        betterFunction()      
+        }
+      }
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
     useEffect(() => {
       fetchApi()
     }, []);
@@ -20,6 +36,7 @@ const Home= (props)=>{
         .get("https://randomuser.me/api/?results=50")
         .then(res => {
           setItems(items.length !== 0? [...items, ...res.data.results] : res.data.results);
+          setLoading(false)
         })
         .catch(
           (error) => {
@@ -31,7 +48,21 @@ const Home= (props)=>{
     const logout=()=>{
       localStorage.clear();
       navigate('/')
+    }    
+    const debounce = function (fn, d) {
+      let timer;
+      return function () {
+        let context = this,
+        args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          fetchApi.apply(context, args);
+          setLoading(false);
+        }, 300);
+      }
     }
+    const betterFunction = debounce(fetchApi, 300);
+
   return(
         <div className="home"> 
             { localStorage.getItem('loggedIn') ?  
@@ -39,11 +70,7 @@ const Home= (props)=>{
                  <div className='header'> <img src='https://www.svgrepo.com/show/17116/contacts.svg' /> Contacts <span className='logout' onClick={logout}>Logout</span></div>
             { items.length !== 0 && 
               <div className='main'>
-                <InfiniteScroll  dataLength={items.length}
-                next={fetchApi}
-                hasMore={true}
-                loader={<Skeleton count={2}/>}
-                >
+                
                 {
                     items.map( item =>(
                         <div className='items clearfix'>
@@ -52,7 +79,7 @@ const Home= (props)=>{
                         </div>
                     ))
                 }
-                </InfiniteScroll>
+              {loader && <Skeleton count={10}/>}
             </div>}
             </div> 
             :
