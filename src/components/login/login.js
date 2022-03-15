@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './login.scss'
-import { Link , useNavigate} from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 const Login= (props)=>{
     const [userName, updateUserName] = useState('');
